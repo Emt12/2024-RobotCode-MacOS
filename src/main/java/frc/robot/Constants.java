@@ -4,10 +4,13 @@
 
 package frc.robot;
 
+import java.util.ArrayList;
+
 import com.revrobotics.CANSparkMax.IdleMode;
 
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
+import edu.wpi.first.math.spline.CubicHermiteSpline;
 import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.math.util.Units;
@@ -151,5 +154,11 @@ public final class Constants {
 
   public static final class NeoMotorConstants {
     public static final double kFreeSpeedRpm = 5676;
+  }
+
+  public static final class ShuffleBoardConstants {
+    public static final int kPDPId = 0;
+    public static final String kTabName = "Control";
+
   }
 }
