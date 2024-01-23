@@ -40,8 +40,8 @@ public class RobotContainer {
   private final Limelight m_Camera = new Limelight();
 
   // The driver's controller
-  //XboxController m_driverController = new XboxController(OIConstants.kDriverControllerPort);
-  Joystick js =  new Joystick(0);
+  XboxController m_driverController = new XboxController(OIConstants.kDriverControllerPort);
+  //Joystick js =  new Joystick(0);
     Robot hey = new Robot();
     /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -56,14 +56,14 @@ public class RobotContainer {
         // Turning is controlled by the X axis of the right stick.
         new RunCommand(
             () -> m_robotDrive.drive(
-                /*-MathUtil.applyDeadband(m_driverController.getLeftY(), OIConstants.kDriveDeadband),
-                -MathUtil.applyDeadband(m_driverController.getLeftX(), OIConstants.kDriveDeadband),
-                -MathUtil.applyDeadband(m_driverController.getRightX(), OIConstants.kDriveDeadband),*/
+                -MathUtil.applyDeadband(m_driverController.getLeftY()/4, OIConstants.kDriveDeadband),
+                -MathUtil.applyDeadband(m_driverController.getLeftX()/4, OIConstants.kDriveDeadband),
+                -MathUtil.applyDeadband(m_driverController.getRightX()/4, OIConstants.kDriveDeadband),
 
                 //MathUtil.applyDeadband(js.getRawAxis(0), OIConstants.kDriveDeadband)/20,
-                -MathUtil.applyDeadband(js.getRawAxis(1), OIConstants.kDriveDeadband)/10,
-                -MathUtil.applyDeadband(js.getRawAxis(0), OIConstants.kDriveDeadband)/10,
-                -MathUtil.applyDeadband(js.getRawAxis(3), OIConstants.kDriveDeadband)/10,
+                //-MathUtil.applyDeadband(js.getRawAxis(1)/4, OIConstants.kDriveDeadband),
+                //-MathUtil.applyDeadband(js.getRawAxis(0)/4, OIConstants.kDriveDeadband),
+                //-MathUtil.applyDeadband(js.getRawAxis(3)/4, OIConstants.kDriveDeadband),
                 
 
                 true, true),
@@ -88,14 +88,17 @@ public class RobotContainer {
     new JoystickButton(m_driverController, 1)
         .whileTrue(new TurnToAngleCmd(m_robotDrive,m_Camera)); // feeding horizontal angle value from limelight to PID controller*/
 
-    new JoystickButton(js, 1)
+    new JoystickButton(m_driverController, 1)
         .whileTrue(new RunCommand(
             () -> m_robotDrive.setX(),
             m_robotDrive));
 
-    new JoystickButton(js, 3)
+    new JoystickButton(m_driverController, 3)
         .whileTrue(new TurnToAngleCmd(m_robotDrive,m_Camera)); // feeding horizontal angle value from limelight to PID controller
-      
+    
+    new JoystickButton(m_driverController, 5)
+        .whileTrue(new RunCommand( () -> m_robotDrive.resetRelative(), m_robotDrive));
+    
   }
 
   /**
