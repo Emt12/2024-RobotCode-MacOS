@@ -23,6 +23,7 @@ import frc.robot.commands.TurnToAngleCmd;
 import frc.robot.subsystems.Dashboard;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.Limelight;
+import frc.robot.subsystems.Shooter;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SwerveControllerCommand;
@@ -42,19 +43,18 @@ public class RobotContainer {
   private final DriveSubsystem m_robotDrive = new DriveSubsystem();
   private final Limelight m_Camera = new Limelight();
   private final Dashboard dashboard = new Dashboard();
+  private final Shooter shooter = new Shooter();
   // The driver's controller
   //XboxController m_driverController = new XboxController(OIConstants.kDriverControllerPort);
   Joystick js =  new Joystick(0);
-    Robot hey = new Robot();
-    /**
+  Robot hey = new Robot();
+  /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
   public RobotContainer() {
     // Configure the button bindings
     configureButtonBindings();
-    SmartDashboard.putNumber("axis1", js.getRawAxis(1)/4);
     //PutOnDashboard();
-
     // Configure default commands
     m_robotDrive.setDefaultCommand(
         // The left stick controls translation of the robot.
@@ -74,11 +74,7 @@ public class RobotContainer {
                 true, true),
             m_robotDrive));
     
-    dashboard.setDefaultCommand(
-        new RunCommand(
-            () -> PutOnDashboard(11), 
-            dashboard)
-        );
+    
 }
 
 
@@ -100,7 +96,7 @@ public class RobotContainer {
     new JoystickButton(m_driverController, 1)
         .whileTrue(new TurnToAngleCmd(m_robotDrive,m_Camera)); // feeding horizontal angle value from limelight to PID controller*/
 
-    new JoystickButton(js, 1)
+    new JoystickButton(js, 8)
         .whileTrue(new RunCommand(
             () -> m_robotDrive.setX(),
             m_robotDrive));
@@ -113,15 +109,13 @@ public class RobotContainer {
     
     new JoystickButton(js, 2)
         .whileTrue(new TurnToAngleCmd(m_robotDrive, m_Camera));
-    new JoystickButton(js, 4)
+    
+    new JoystickButton(js, 1)
         .whileTrue(new RunCommand(
-            ()-> PutOnDashboard(js.getRawAxis(1))));
+            () -> shooter.shoot(),
+            shooter));
   }
 
-  protected void PutOnDashboard(double number){
-    SmartDashboard.putNumber("nmb", number);
-
-  }
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
    *

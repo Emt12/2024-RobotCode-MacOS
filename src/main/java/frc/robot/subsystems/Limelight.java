@@ -4,18 +4,21 @@ import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Constants.LimelightConstants;;
+import frc.robot.Constants.LimelightConstants;
 
 
 public class Limelight extends SubsystemBase {
   public Limelight(){}
-
+  
   //Limelight NetworkTables
   NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
   NetworkTableEntry tv = table.getEntry("tv");
   NetworkTableEntry tx = table.getEntry("tx");
   NetworkTableEntry ty = table.getEntry("ty");
   NetworkTableEntry ta = table.getEntry("ta");
+
+  double tid[] = table.getEntry("tid").getDoubleArray(new double[6]);
+
   public double x;
   public double y;
   public double state; 
@@ -37,6 +40,9 @@ public class Limelight extends SubsystemBase {
   //get y angle 
   public double getArea(){
     return y;
+  }
+  public double[] getID(){
+    return tid;
   }
   //get distance 
   public double getDistance(double verticalAngle, double mountAngle, double limelightHeight, double goalHeight){

@@ -161,4 +161,8 @@ public final class Constants {
     public static final String kTabName = "Control";
 
   }
+  public static final class ShooterConstants {
+    public static final int ShooterCanID = 36;
+    public static final double defaultSpeed = 0.35;
+  }
 }
