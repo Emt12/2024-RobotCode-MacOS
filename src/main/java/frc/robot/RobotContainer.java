@@ -29,8 +29,13 @@ import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SwerveControllerCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import java.util.List;
+
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.shuffleboard.*;
+import frc.robot.subsystems.ElevatorSubsystem;
 
 /*
  * This class is where the bulk of the robot should be declared.  Since Command-based is a
@@ -44,6 +49,8 @@ public class RobotContainer {
   private final Limelight m_Camera = new Limelight();
   private final Dashboard dashboard = new Dashboard();
   private final Shooter shooter = new Shooter();
+  private final ElevatorSubsystem elevatorSubsystem = new ElevatorSubsystem();
+  
   // The driver's controller
   //XboxController m_driverController = new XboxController(OIConstants.kDriverControllerPort);
   Joystick js =  new Joystick(0);
@@ -101,19 +108,36 @@ public class RobotContainer {
             () -> m_robotDrive.setX(),
             m_robotDrive));
 
-    new JoystickButton(js, 3)
+    new JoystickButton(js, 4)
         .whileTrue(new TurnToAngleCmd(m_robotDrive,m_Camera)); // feeding horizontal angle value from limelight to PID controller
     
     new JoystickButton(js, 5)
         .whileTrue(new RunCommand( () -> m_robotDrive.resetRelative(), m_robotDrive));
     
     new JoystickButton(js, 2)
-        .whileTrue(new TurnToAngleCmd(m_robotDrive, m_Camera));
+        .whileTrue(new RunCommand(
+            () -> elevatorSubsystem.testStart(-0.05), 
+            elevatorSubsystem));
+        //.whileTrue(new TurnToAngleCmd(m_robotDrive, m_Camera));
     
-    new JoystickButton(js, 1)
+    new JoystickButton(js, 7)
         .whileTrue(new RunCommand(
             () -> shooter.shoot(),
             shooter));
+        /* .whileFalse(new RunCommand(
+            () -> shooter.stop(),
+            shooter));*/
+    
+    new JoystickButton(js, 3)
+        .whileTrue(new RunCommand(
+            () -> elevatorSubsystem.testStart(js.getRawAxis(5)/1.5) , 
+            elevatorSubsystem));
+    
+    new JoystickButton(js, 1)
+        .whileTrue(new RunCommand(
+            () -> elevatorSubsystem.testStop(),
+            elevatorSubsystem));
+
   }
 
   /**

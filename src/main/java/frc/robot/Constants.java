@@ -62,7 +62,7 @@ public final class Constants {
     public static final int kRearRightDrivingCanId = 51;
 
     public static final int kFrontLeftTurningCanId = 43;
-    public static final int kRearLeftTurningCanId = 44;
+    public static final int kRearLeftTurningCanId = 45;//ssss
     public static final int kFrontRightTurningCanId = 42;
     public static final int kRearRightTurningCanId = 41;
 
@@ -162,7 +162,15 @@ public final class Constants {
 
   }
   public static final class ShooterConstants {
-    public static final int ShooterCanID = 36;
-    public static final double defaultSpeed = 0.35;
+    public static final int ShooterMasterCanID = 36;
+    public static final int ShooterFollowerCanID = 26;
+    public static final double defaultSpeed = 0.90;
+  }
+  public static final class ElevatorConstants {
+    public static final int kMasterCanID = 31;
+    public static final int kFollowerCanID = 32;
+  }
+  public static final class IntakeConstants {
+    public static final int kIntakeMotorCanID = 17;
   }
 }

@@ -9,16 +9,18 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 public class Shooter extends SubsystemBase{
     
-    private final CANSparkMax sparkMax = new CANSparkMax(21, MotorType.kBrushless);
-    private final CANSparkMax sparkMax2 = new CANSparkMax(31, MotorType.kBrushless);
-    
-    public void setSpeed(double speed){
-        sparkMax.set(speed);
-        sparkMax2.set(speed);
-        
+    private final CANSparkMax mMasterMotor = new CANSparkMax(ShooterConstants.ShooterMasterCanID, MotorType.kBrushless);
+    private final CANSparkMax mFollowerMotor = new CANSparkMax(ShooterConstants.ShooterFollowerCanID, MotorType.kBrushless);
+    public Shooter(){
+        mFollowerMotor.setInverted(true);
+        mFollowerMotor.follow(mMasterMotor);
+
     }
+    
     public void shoot(){
-        sparkMax2.setInverted(true);
-        setSpeed(1);
+        mMasterMotor.set(ShooterConstants.defaultSpeed);
+    }
+    public void stop(){
+        mMasterMotor.set(0);
     }
 }

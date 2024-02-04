@@ -1,6 +1,8 @@
 package frc.robot.subsystems;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardComponent;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardLayout;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import frc.robot.subsystems.*;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -19,6 +21,7 @@ public class Dashboard extends SubsystemBase{
     private PowerDistribution pdp = new PowerDistribution();
     private AHRS m_gyro = new AHRS(SPI.Port.kMXP);
     private ShuffleboardTab driverTab = Shuffleboard.getTab(ShuffleBoardConstants.kTabName);
+
     
     private ComplexWidget pdpWidget;
     private ComplexWidget gyroWidget;
@@ -57,7 +60,7 @@ public class Dashboard extends SubsystemBase{
             .add("PDP", pdp)
             .withWidget(BuiltInWidgets.kPowerDistribution)
             .withPosition(0, 7)
-            .withSize(3, 2);
+            .withSize(3, 3);
     }
 
     protected void putGyroAngle(){
@@ -65,6 +68,6 @@ public class Dashboard extends SubsystemBase{
             .add("Gyro", m_gyro)
             .withWidget(BuiltInWidgets.kGyro)
             .withPosition(12, 12)
-            .withSize(4, 4);
+            .withSize(2, 2);
     }
 }

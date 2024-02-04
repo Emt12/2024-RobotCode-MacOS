@@ -10,12 +10,11 @@ public class AprilTagAimer extends CommandBase{
     private final PIDController pidController;
     private final Limelight visionSubsystem;
 
-    public AprilTagAimer(DriveSubsystem driveSubsystem, Limelight limelight){
+    public AprilTagAimer(DriveSubsystem driveSubsystem, Limelight visionSubsystem){
         this.driveSubsystem = driveSubsystem;
         this.visionSubsystem = visionSubsystem;
         this.pidController = new PIDController(1, 0, 0);
         pidController.enableContinuousInput(-360, 360);
-        addRequirements(visionSubsystem);
         addRequirements(driveSubsystem);
     }
 
@@ -29,6 +28,13 @@ public class AprilTagAimer extends CommandBase{
     public void AimToTarget(){
         TurnToTarget();
         GoToTarget();
+        driveSubsystem.drive(0, 0, 0, false, false);
+    }
+
+    @Override
+    public void execute() {
+        AimToTarget();
+        super.execute();
     }
 
 }
